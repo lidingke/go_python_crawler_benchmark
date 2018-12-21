@@ -1,5 +1,6 @@
 ```
-scrapy runspider py_get.py
+cd py_get
+scrapy crawl company
 ```
 
 ```
@@ -10,4 +11,7 @@ dbline.txt:
 ```
 username:password
 ```
-
+py_get/dbline.txt
+```
+mysql+mysqlconnector://<username>:<password>@localhost:3306/<dbname>
+```
