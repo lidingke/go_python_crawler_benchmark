@@ -80,7 +80,7 @@ func IoUtil(name string) string {
 
 func main() {
 	t1 := time.Now()
-	const workerNum = 50
+	const workerNum = 16
 	urlChan := make(chan string, 20)
 	var wg sync.WaitGroup
 	for i := 0; i < workerNum; i++ {

@@ -20,11 +20,11 @@ class Hander(object):
     def insert(self, id,content,sub):
         # table = self._get_table_in_month(id_)
         #         self.lock.acquire()
-        with self.lock:
-            with self.engine.connect() as con:
-                cmd = """INSERT INTO company_test (id, content, sub) VALUES ({},\'{}\',\'{}\')""".format(id,content,sub)
-                # print(cmd)
-                result = con.execute(cmd)
+#         with self.lock:
+        with self.engine.connect() as con:
+            cmd = """INSERT INTO company_test (id, content, sub) VALUES ({},\'{}\',\'{}\')""".format(id,content,sub)
+            # print(cmd)
+            result = con.execute(cmd)
                 # print(result)
                 # line = result.first()
         #             self.lock.release()
@@ -68,7 +68,7 @@ class BlogSpider(scrapy.Spider):
             sub = re.xpath('@href').extract_first()
             content = re.xpath('b/text()').extract_first()
             id = sub.split('/')[-1]
-            # print(id,sub,content)
+#             print(id,sub,content)
 
             try:
                 self.head.insert(id,content,sub)
@@ -84,7 +84,7 @@ class BlogSpider(scrapy.Spider):
                 if content.find(','):
                     content = content.replace('\'', '')
                     self.head.insert(id, content, sub)
-                # pdb.set_trace()
+                pdb.set_trace()
             # pdb.set_trace()
         # for title in response.css('.post-header>h2'):
         #     yield {'title': title.css('a ::text').extract_first()}
