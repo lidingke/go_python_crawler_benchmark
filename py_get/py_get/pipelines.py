@@ -9,9 +9,6 @@ from sqlalchemy import create_engine
 import sqlalchemy
 
 
-with open("dbline.txt",'r') as f:
-    MYSQL_HANDER = f.read().strip()
-
 
 # class PyGetPipeline(object):
 #
@@ -31,7 +28,10 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import String, Column, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
+
 Base = declarative_base()
+with open("dbline.txt", 'r') as f:
+    MYSQL_HANDER = f.read().strip()
 
 class Company(Base):
     __tablename__ = "company_test"
@@ -39,24 +39,19 @@ class Company(Base):
     content = Column(String(127))
     sub = Column(String(255))
 
+
 class PyGetManyPipeline(object):
 
     def open_spider(self, spider):
-        # self.engine = create_engine('mysql+mysqlconnector://%s@127.0.0.1:3306/trnet'%dbline)
         engine = create_engine(MYSQL_HANDER)
-
         self.session = sessionmaker(bind=engine)
 
     def process_item(self, item, spider):
         session = self.session()
         for data in item['data']:
-            id, content, sub = int(data['id']),data['content'],data['sub']
-            line = Company(id=id,content=content,sub=sub)
+            id, content, sub = int(data['id']), data['content'], data['sub']
+            line = Company(id=id, content=content, sub=sub)
             session.add(line)
-        session.commit()
-        # with self.engine.connect() as con:
-        #     cmd = """INSERT INTO company_test (id, content, sub) VALUES ({},\'{}\',\'{}\')""".format(id,content,sub)
-            # print(cmd)
-            # result = con.execute(cmd)
-
+            # session.commit() # 9min25s for 100 pages
+        session.commit() # 9s for 100 pages
         return item

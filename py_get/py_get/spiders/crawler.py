@@ -67,7 +67,7 @@ class BlogSpider(scrapy.Spider):
                 'content': content,
             }
             item['data'].append(_)
-        # return item
+        return item
             # try:
             #     self.head.insert(id,content,sub)
             # except mysql.connector.errors.IntegrityError as e:
